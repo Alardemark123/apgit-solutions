@@ -3,6 +3,9 @@
 import Image from "next/image";
 import AnimatedReveal from "./AnimatedReveal";
 import poppins from "../fonts/poppins";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect } from "react";
 
 interface Service {
   title: string;
@@ -43,13 +46,154 @@ const services: Service[] = [
   },
 ];
 
+const logos = [
+  { src: "/logos/Detoxicare.png", alt: "Detoxicare", link: "https://partner1.com" },
+  { src: "/logos/Antiseptic.png", alt: "Antiseptic", link: "https://partner2.com" },
+  { src: "/logos/Gc-hemodyamics.png", alt: "GC Hemodynamics", link: "https://partner3.com" },
+  { src: "/logos/HealthPrescription.png", alt: "Health Prescription", link: "https://partner4.com" },
+  { src: "/logos/MolecureLab.png", alt: "Molecure Lab", link: "https://partner5.com" },
+  { src: "/logos/Prime-Health.png", alt: "Prime Health", link: "https://partner6.com" },
+];
+
+const LogoShowcase = () => {
+  const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect if mobile
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const nextLogo = () => setIndex((prev) => (prev + 1) % logos.length);
+  const prevLogo = () => setIndex((prev) => (prev - 1 + logos.length) % logos.length);
+
+  // Responsive visible logos
+  const visibleLogos = isMobile
+    ? [logos[index % logos.length]]
+    : [
+        logos[index % logos.length],
+        logos[(index + 1) % logos.length],
+        logos[(index + 2) % logos.length],
+      ];
+
+  return (
+    <section className="relative w-full py-16 md:py-24 overflow-hidden">
+      <div className="w-full flex flex-col items-center">
+        {/* Title */}
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">
+          Our <span className="text-[#578fca]">Valued Clients</span>
+        </h2>
+
+        <p className="text-gray-600 text-base sm:text-lg text-center max-w-2xl mx-auto mb-10 md:mb-16">
+          We’ve had the privilege of working with trusted healthcare organizations and diagnostic companies. 
+          Here are some of the clients who have collaborated with us.
+        </p>
+
+        {/* Slider */}
+        <div className="relative w-full flex items-center justify-center">
+          {/* Prev Button */}
+          <button
+  onClick={prevLogo}
+  className="absolute left-2 sm:left-4 md:left-10 z-20 flex items-center justify-center
+             w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-4 border-white
+             text-white bg-[#578fca] font-bold transition duration-300
+             hover:bg-white hover:text-[#578fca] hover:border-[#578fca]
+             hover:scale-105"
+>
+  ◀
+</button>
+
+
+          {/* Logos Grid */}
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={index + (isMobile ? "-mobile" : "-desktop")}
+                initial={{ opacity: 0, x: 80 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -80 }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+                className={`grid ${
+                  isMobile
+                    ? "grid-cols-1"
+                    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+                } gap-10 sm:gap-16 md:gap-20 place-items-center`}
+              >
+                {visibleLogos.map((logo, i) => (
+                  <a
+                    key={i}
+                    href={logo.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105"
+                  >
+                    <div
+                      className={`relative ${
+                        isMobile ? "w-48 h-48" : "w-60 h-60 md:w-72 md:h-72"
+                      }`}
+                    >
+                      <Image
+                        src={logo.src}
+                        alt={logo.alt}
+                        fill
+                        className="object-contain transition-all duration-300 group-hover:opacity-80"
+                        priority
+                      />
+                    </div>
+                  </a>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Next Button */}
+          <button
+  onClick={nextLogo}
+  className="absolute right-2 sm:right-4 md:right-10 z-20 flex items-center justify-center
+             w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-4 border-white
+             text-white bg-[#578fca] font-bold transition duration-300
+             hover:bg-white hover:text-[#578fca] hover:border-[#578fca]
+             hover:scale-105"
+>
+  ▶
+</button>
+
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="flex items-center justify-center mt-8 space-x-3">
+          {logos.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                i === index ? "bg-[#578fca] scale-125" : "bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
+
+
+
+
+
+
 export default function ServicesSection() {
   return (
     <section
       id="services"
       className={`${poppins.className} py-20 bg-gradient-to-b from-white to-gray-50 px-4 sm:px-6 lg:px-8 overflow-x-hidden`}
     >
-      <div className="max-w-7xl mx-auto">
+     <div className="mx-auto max-w-[1600px]">
         <div className="text-center mb-16">
           <p className="text-xl font-semibold text-gray-900">
             What we can do for you?
@@ -78,19 +222,19 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:gap-10 md:gap-12 px-4 sm:px-8 md:px-16 lg:px-24 xl:px-36 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
             <div
               key={index}
-              className="w-full bg-[#f6f4fb] rounded-2xl shadow-xl hover:shadow-lg transition duration-300 flex flex-col items-center text-center px-6 py-8 mx-auto"
+              className="w-full bg-[#f6f4fb] rounded-2xl shadow-xl hover:shadow-lg transition duration-300 flex flex-col items-center text-center px-6 py-8"
             >
               <div className="w-full mb-4">
-                <Image
+                <Image 
                   src={service.image}
                   alt={service.title}
-                  width={400}
-                  height={300}
-                  className="w-full max-w-full h-auto object-contain"
+                  width={250}
+                  height={250}
+                  className="mx-auto w-auto h-auto max-h-40 object-contain"
                 />
               </div>
               <h3 className="text-lg font-extrabold text-gray-900 mb-3">
@@ -101,8 +245,9 @@ export default function ServicesSection() {
           ))}
         </div>
 
+
         {/* === Feature Block 1 === */}
-        <div className="mt-28 w-full overflow-hidden">
+        <div className="mt-38 w-full overflow-hidden">
           <AnimatedReveal delay={0.1} direction="left">
             <div className="flex flex-col lg:flex-row items-center gap-12 w-full">
               <div className="w-full lg:w-1/2">
@@ -111,7 +256,7 @@ export default function ServicesSection() {
                   alt="Virtual Clinic Interface"
                   width={700}
                   height={500}
-                  className="w-full max-w-full h-auto object-contain"
+                  className="mx-auto w-auto h-auto max-h-280 object-contain"
                   priority
                 />
               </div>
@@ -147,7 +292,7 @@ export default function ServicesSection() {
         </div>
 
         {/* === Feature Block 2 === */}
-        <div className="mt-28 w-full overflow-hidden">
+        <div className="mt-38 w-full overflow-hidden">
           <AnimatedReveal delay={0.1} direction="right">
             <div className="flex flex-col lg:flex-row-reverse items-center gap-12 w-full">
               <div className="w-full lg:w-1/2">
@@ -156,7 +301,7 @@ export default function ServicesSection() {
                   alt="Queue System"
                   width={700}
                   height={500}
-                  className="w-full max-w-full h-auto object-contain"
+                  className="mx-auto w-auto h-auto max-h-180 object-contain"
                   priority
                 />
               </div>
@@ -182,7 +327,7 @@ export default function ServicesSection() {
         </div>
 
         {/* === Feature Block 3 === */}
-        <div className="mt-28 w-full overflow-hidden">
+        <div className="mt-38 w-full overflow-hidden">
           <AnimatedReveal delay={0.1} direction="left">
             <div className="flex flex-col lg:flex-row items-center gap-12 w-full">
               <div className="w-full lg:w-1/2">
@@ -191,7 +336,7 @@ export default function ServicesSection() {
                   alt="eInvites"
                   width={700}
                   height={500}
-                  className="w-full max-w-full h-auto object-contain"
+                  className="mx-auto w-auto h-auto max-h-180 object-contain"
                   priority
                 />
               </div>
@@ -226,7 +371,7 @@ export default function ServicesSection() {
         </div>
 
         {/* === Feature Block 4 === */}
-        <div className="mt-28 w-full overflow-hidden">
+        <div className="mt-38 w-full overflow-hidden">
           <AnimatedReveal delay={0.1} direction="right">
             <div className="flex flex-col lg:flex-row-reverse items-center gap-12 w-full">
               <div className="w-full lg:w-1/2">
@@ -235,7 +380,7 @@ export default function ServicesSection() {
                   alt="Mediko Connect Interface"
                   width={700}
                   height={500}
-                  className="w-full max-w-full h-auto object-contain"
+                  className="mx-auto w-auto h-auto max-h-180 object-contain"
                   priority
                 />
               </div>
@@ -274,6 +419,8 @@ export default function ServicesSection() {
             </div>
           </AnimatedReveal>
         </div>
+
+        <LogoShowcase />
       </div>
     </section>
   );
