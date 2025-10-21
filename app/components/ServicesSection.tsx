@@ -47,12 +47,12 @@ const services: Service[] = [
 ];
 
 const logos = [
-  { src: "/logos/Detoxicare.png", alt: "Detoxicare", link: "https://partner1.com" },
-  { src: "/logos/Antiseptic.png", alt: "Antiseptic", link: "https://partner2.com" },
-  { src: "/logos/Gc-hemodyamics.png", alt: "GC Hemodynamics", link: "https://partner3.com" },
-  { src: "/logos/HealthPrescription.png", alt: "Health Prescription", link: "https://partner4.com" },
-  { src: "/logos/MolecureLab.png", alt: "Molecure Lab", link: "https://partner5.com" },
-  { src: "/logos/Prime-Health.png", alt: "Prime Health", link: "https://partner6.com" },
+  { src: "/logos/Detoxicare.png", alt: "Detoxicare", link: "detoxicare.apgit-qr.com" },
+  { src: "/logos/Antiseptic.png", alt: "Antiseptic", link: "antiseptech.apgit-qr.com" },
+  { src: "/logos/Gc-hemodyamics.png", alt: "GC Hemodynamics", link: "https://gc-hemodynamix.apgit-qr.com" },
+  { src: "/logos/HealthPrescription.png", alt: "Health Prescription", link: "healthprescription.apgit-qr.com" },
+  { src: "/logos/MolecureLab.png", alt: "Molecure Lab", link: "https://molecularlab.apgit-qr.com" },
+  { src: "/logos/Prime-Health.png", alt: "Prime Health", link: "https://primehealth.apgit-qr.com" },
 ];
 
 const LogoShowcase = () => {
