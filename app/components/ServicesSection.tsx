@@ -122,29 +122,33 @@ const LogoShowcase = () => {
                     : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
                 } gap-10 sm:gap-16 md:gap-20 place-items-center`}
               >
-                {visibleLogos.map((logo, i) => (
-                  <a
-                    key={i}
-                    href={logo.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105"
-                  >
-                    <div
-                      className={`relative ${
-                        isMobile ? "w-48 h-48" : "w-60 h-60 md:w-72 md:h-72"
-                      }`}
-                    >
-                      <Image
-                        src={logo.src}
-                        alt={logo.alt}
-                        fill
-                        className="object-contain transition-all duration-300 group-hover:opacity-80"
-                        priority
-                      />
-                    </div>
-                  </a>
-                ))}
+                {visibleLogos.map((logo, i) => {
+  // Ensure full URL
+  const url = logo.link.startsWith("http") ? logo.link : `https://${logo.link}`;
+
+  return (
+    <a
+      key={i}
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105"
+    >
+      <div
+        className={`relative ${isMobile ? "w-48 h-48" : "w-60 h-60 md:w-72 md:h-72"}`}
+      >
+        <Image
+          src={logo.src}
+          alt={logo.alt}
+          fill
+          className="object-contain transition-all duration-300 group-hover:opacity-80"
+          priority
+        />
+      </div>
+    </a>
+  );
+})}
+
               </motion.div>
             </AnimatePresence>
           </div>
