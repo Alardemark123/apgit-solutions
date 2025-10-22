@@ -47,12 +47,18 @@ const services: Service[] = [
 ];
 
 const logos = [
-  { src: "/logos/Detoxicare.png", alt: "Detoxicare", link: "detoxicare.apgit-qr.com" },
-  { src: "/logos/Antiseptic.png", alt: "Antiseptic", link: "antiseptech.apgit-qr.com" },
+  { src: "/logos/Detoxicare.png", alt: "Detoxicare", link: "https://detoxicare.apgit-qr.com" },
+  { src: "/logos/Antiseptic.png", alt: "Antiseptic", link: "https://antiseptech.apgit-qr.com" },
   { src: "/logos/Gc-hemodyamics.png", alt: "GC Hemodynamics", link: "https://gc-hemodynamix.apgit-qr.com" },
-  { src: "/logos/HealthPrescription.png", alt: "Health Prescription", link: "healthprescription.apgit-qr.com" },
+  { src: "/logos/HealthPrescription.png", alt: "Health Prescription", link: "https://healthprescription.apgit-qr.com" },
   { src: "/logos/MolecureLab.png", alt: "Molecure Lab", link: "https://molecularlab.apgit-qr.com" },
   { src: "/logos/Prime-Health.png", alt: "Prime Health", link: "https://primehealth.apgit-qr.com" },
+  { src: "/logos/diagnosticPlus.png", alt: "Diagnostic Plus", link: "https://www.diagnosticsplus.ph" },
+  { src: "/logos/Innovatronix.png", alt: "Innovatronix", link: "https://www.innovatronix.com" },
+  { src: "/logos/mediko-kapitolyo.png", alt: "Mediko Kapitolyo", link: "https://medikokapitolyo.com.ph" },
+  { src: "/logos/metrodocs.png", alt: "Metrodocs Hospital", link: "https://www.metrodocshospital.com" },
+  { src: "/logos/Natra2.png", alt: "Natrapharm", link: "https://natrapharm.com" },
+  { src: "/logos/Natra.png", alt: "Health Information Program", link: "https://natrapharm.com" },
 ];
 
 const LogoShowcase = () => {
